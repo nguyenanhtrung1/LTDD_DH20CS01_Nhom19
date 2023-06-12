@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ShoeStore</string>
+    <string name="txtTrangChu" > Trang Chủ</string>
+    <string name="txtSanPhamMoi">Sản Phẩm Mới</string>
+</resources>
