@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             getLoaiSanPham();
             getSPMoi();
             getEventClick();
+
         }else{
             Toast.makeText(getApplicationContext(), "Không có internet", Toast.LENGTH_LONG).show();
         }
@@ -177,6 +178,9 @@ public class MainActivity extends AppCompatActivity {
         listViewTrangChu = findViewById(R.id.listviewTrangChu);
         arrLoaiSp = new ArrayList<>();
         arrSanPhamMoi = new ArrayList<>();
+        if(Utils.arrGioHang == null){
+            Utils.arrGioHang = new ArrayList<>();
+        }
     }
 
     private boolean isConnected(Context context) {

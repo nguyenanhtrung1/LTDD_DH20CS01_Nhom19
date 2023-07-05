@@ -2,4 +2,9 @@
     <string name="app_name">ShoeStore</string>
     <string name="txtTrangChu"> Trang Chủ</string>
     <string name="txtSanPhamMoi">Sản Phẩm Mới</string>
+    <string name="titleChiTietSP">Chi Tiết Sản Phẩm</string>
+    <string name="txtTen_ChiTietSP">Tên Sản Phẩm</string>
+    <string name="txtGia_ChiTietSP">Giá : 25.000.000 Đồng</string>
+    <string name="btn_ThemGioHang">Thêm vào giỏ hàng</string>
+    <string name="toolbarGioHang">Giỏ hàng của bạn</string>
 </resources>

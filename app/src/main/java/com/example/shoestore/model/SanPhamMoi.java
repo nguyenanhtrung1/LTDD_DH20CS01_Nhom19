@@ -1,6 +1,8 @@
 package com.example.shoestore.model;
 
-public class SanPhamMoi {
+import java.io.Serializable;
+
+public class SanPhamMoi implements Serializable{
     int masanphammoi;
     String tensanpham;
     String giasanpham;

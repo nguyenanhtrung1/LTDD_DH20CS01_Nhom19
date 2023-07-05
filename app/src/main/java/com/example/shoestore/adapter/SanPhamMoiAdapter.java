@@ -1,6 +1,7 @@
 package com.example.shoestore.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.shoestore.Interface.ItemClickListener;
 import com.example.shoestore.R;
+import com.example.shoestore.activity.ChiTietSPActivity;
 import com.example.shoestore.model.SanPhamMoi;
 
 import java.text.DecimalFormat;
@@ -41,6 +44,17 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.txtGiaSpmoi.setText("Giá : " + decimalFormat.format(Double.parseDouble(sanPhamMoi.getGiasanpham())) + "Đ");
         Glide.with(context).load(sanPhamMoi.getHinhanh()).into(holder.imgSanPhamMoi);
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int pos, boolean isLongClick) {
+                if(!isLongClick){
+                    Intent intent = new Intent(context, ChiTietSPActivity.class);
+                    intent.putExtra("chitiet", sanPhamMoi);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -48,15 +62,25 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
         return arraySPMoi.size();
     }
 
-    public class MyViewHolder  extends RecyclerView.ViewHolder{
+    public class MyViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txtGiaSpmoi, txtTenSpmoi;
         ImageView imgSanPhamMoi;
+        private ItemClickListener itemClickListener;
         public MyViewHolder(@NonNull View itemView){
             super((itemView));
             txtGiaSpmoi = itemView.findViewById(R.id.item_giaspmoi);
             txtTenSpmoi = itemView.findViewById(R.id.item_tenspmoi);
             imgSanPhamMoi = itemView.findViewById(R.id.item_imgspmoi);
+            itemView.setOnClickListener(this);
         }
 
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onClick(view, getAdapterPosition(),false);
+        }
     }
 }

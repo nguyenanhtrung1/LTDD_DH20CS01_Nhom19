@@ -55,6 +55,7 @@ public class NikeActivity extends AppCompatActivity {
                                 arrAdidas = sanPhamMoiModel.getResult();
                                 adapter = new AdidasAdapter(getApplicationContext(), arrAdidas);
                                 recyclerViewAdidas.setAdapter(adapter);
+                                toolbarAdidas.setTitle("Nike");
                             }
                         },
                         throwable -> {

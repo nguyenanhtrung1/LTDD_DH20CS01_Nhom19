@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarChiTietSP"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#35E83D"
+        app:title="@string/titleChiTietSP">
+
+        <FrameLayout
+            android:id="@+id/img_GioHang"
+            android:layout_width="60dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp">
+
+            <com.nex3z.notificationbadge.NotificationBadge
+
+                android:id="@+id/badge_SoLuongSP"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="top|right">
+
+            </com.nex3z.notificationbadge.NotificationBadge>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/cart">
+
+            </ImageView>
+        </FrameLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+
+        <ImageView
+
+            android:id="@+id/img_ChiTietSP"
+            android:layout_width="201dp"
+            android:layout_height="201dp"
+            android:layout_weight="3"
+            android:src="@drawable/baseline_perm_media_24">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtTen_ChiTietSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/txtTen_ChiTietSP"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/txtGia_ChiTietSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/txtGia_ChiTietSP"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="19sp">
+
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spinner_SoLuongSP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/spinner_soluongsp">
+
+            </Spinner>
+
+            <Button
+                android:id="@+id/btn_ThemVaoGH"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/btn_ThemGioHang">
+
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả chi tiết sản phẩm"
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtMoTa_ChiTietSP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp">
+
+            </TextView>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>
