@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.ResetMatKhauActivity">
+    <TextView
+        android:text="Quên Mật Khẩu"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:background="@color/maincolor"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/line1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtTaiKhoanReset"
+            android:hint="Nhập Tài Khoản"
+            android:drawablePadding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.textfield.TextInputEditText>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_margin="20dp"
+            android:text="Gửi yêu cầu"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:id="@+id/btnResetMatKhau"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_changebutton">
+        </androidx.appcompat.widget.AppCompatButton>
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

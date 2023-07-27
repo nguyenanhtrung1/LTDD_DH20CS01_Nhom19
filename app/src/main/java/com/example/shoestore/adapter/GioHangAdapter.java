@@ -1,6 +1,7 @@
 package com.example.shoestore.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.shoestore.Interface.ImageClickListener;
 import com.example.shoestore.R;
+import com.example.shoestore.activity.GioHangActivity;
 import com.example.shoestore.model.GioHang;
+import com.example.shoestore.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -43,7 +48,52 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         holder.txtGiaSp.setText( decimalFormat.format((gioHang.getGiasanpham())) + "Đ");
         long gia = gioHang.getSoluong() * gioHang.getGiasanpham();
         holder.txtTongGia.setText(decimalFormat.format(gia));
+        holder.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onImageClickListener(View view, int pos, int giatri) {
+                if(giatri == 1){
+                     if(arrGioHang.get(pos).getSoluong() > 1){
+                         int soLuongMoi = arrGioHang.get(pos).getSoluong()-1;
+                         arrGioHang.get(pos).setSoluong(soLuongMoi);
 
+                         holder.txtSoLuong.setText(arrGioHang.get(pos).getSoluong()+" ");
+                         long gia = arrGioHang.get(pos).getSoluong() * arrGioHang.get(pos).getGiasanpham();
+                         holder.txtTongGia.setText(decimalFormat.format(gia));
+
+                     }else if (arrGioHang.get(pos).getSoluong() == 1){
+                         AlertDialog.Builder AlertXoaSP = new AlertDialog.Builder(view.getRootView().getContext());
+                         AlertXoaSP.setTitle("Thông báo !!");
+                         AlertXoaSP.setMessage("Bạn có muốn xoá sản phẩm nay khỏi giỏ hàng? ");
+                         AlertXoaSP.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int which) {
+                                 Utils.arrGioHang.remove(pos);
+                                 notifyDataSetChanged();
+                                 GioHangActivity.totalMoney();
+                             }
+                         });
+                         AlertXoaSP.setNegativeButton("Huỷ!!", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int which) {
+                                 dialog.dismiss();
+                             }
+                         });
+                         AlertXoaSP.show();
+
+                     }
+                }
+                else if(giatri == 2){
+                    if(arrGioHang.get(pos).getSoluong() < 11){
+                        int soLuongMoi = arrGioHang.get(pos).getSoluong()+1;
+                        arrGioHang.get(pos).setSoluong(soLuongMoi);
+                    }
+                    holder.txtSoLuong.setText(arrGioHang.get(pos).getSoluong()+" ");
+                    long gia = arrGioHang.get(pos).getSoluong() * arrGioHang.get(pos).getGiasanpham();
+                    holder.txtTongGia.setText(decimalFormat.format(gia));
+                }
+
+            }
+        });
     }
 
     @Override
@@ -51,9 +101,10 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         return arrGioHang.size();
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder {
-        ImageView imgItemGioHang;
+    public class MyViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView imgItemGioHang,imgTruSanPham,imgCongSanPham;
         TextView txtTenSp, txtGiaSp, txtSoLuong, txtTongGia;
+        ImageClickListener imageClickListener;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItemGioHang = itemView.findViewById(R.id.img_ItemGioHang);
@@ -61,7 +112,28 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             txtGiaSp= itemView.findViewById(R.id.txtGia_itemGioHang);
             txtSoLuong = itemView.findViewById(R.id.txtSoLuong_GioHang);
             txtTongGia = itemView.findViewById(R.id.txtGia_SPGioHang);
+            imgCongSanPham = itemView.findViewById(R.id.img_CongSPGioHang);
+            imgTruSanPham = itemView.findViewById(R.id.img_TruSPGioHang);
+
+            imgTruSanPham.setOnClickListener(this);
+            imgCongSanPham.setOnClickListener(this);
+
         }
 
+        public void setImageClickListener(ImageClickListener imageClickListener) {
+            this.imageClickListener = imageClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(v == imgTruSanPham){
+                imageClickListener.onImageClickListener(v, getAdapterPosition(), 1);
+                GioHangActivity.totalMoney();
+            }
+            else if(v == imgCongSanPham){
+                imageClickListener.onImageClickListener(v,getAdapterPosition(), 2);
+                GioHangActivity.totalMoney();
+            }
+        }
     }
 }

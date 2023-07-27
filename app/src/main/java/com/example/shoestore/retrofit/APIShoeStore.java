@@ -2,6 +2,7 @@ package com.example.shoestore.retrofit;
 
 import com.example.shoestore.model.LoaiSpModel;
 import com.example.shoestore.model.SanPhamMoiModel;
+import com.example.shoestore.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Field;
@@ -29,4 +30,18 @@ public interface APIShoeStore {
       @Field("loai") int loai
     );
 
+    @POST("dangki.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangKi(
+            @Field("taikhoan") String taikhoan,
+            @Field("matkhau") String matkhau,
+            @Field("tennguoidung") String tennguoidung,
+            @Field("sodienthoai") String sodienthoai
+    );
+    @POST("dangnhap.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangNhap(
+            @Field("taikhoan") String taikhoan,
+            @Field("matkhau") String matkhau
+    );
 }

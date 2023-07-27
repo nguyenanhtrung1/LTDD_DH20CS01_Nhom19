@@ -15,9 +15,11 @@ import com.example.shoestore.R;
 import com.example.shoestore.adapter.GioHangAdapter;
 import com.example.shoestore.utils.Utils;
 
+import java.text.DecimalFormat;
+
 public class GioHangActivity extends AppCompatActivity {
     ImageView imgGioHangTrong;
-    TextView txtTongTien;
+    static TextView txtTongTien;
     Toolbar toolbarGioHang;
     RecyclerView recyclerViewGioHang;
     Button btnMuaHang;
@@ -28,6 +30,16 @@ public class GioHangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gio_hang);
         initView();
         initControl();
+        totalMoney();
+    }
+
+    public static void totalMoney() {
+        long tongtiensp = 0;
+        for(int i = 0; i < Utils.arrGioHang.size(); i++){
+            tongtiensp = tongtiensp +  (Utils.arrGioHang.get(i).getGiasanpham()* Utils.arrGioHang.get(i).getSoluong());
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        txtTongTien.setText(decimalFormat.format(tongtiensp));
     }
 
     private void initControl() {

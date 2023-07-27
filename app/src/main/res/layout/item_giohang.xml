@@ -47,11 +47,13 @@
                     android:layout_gravity="center"
                     android:text="15000"
                     android:textColor="@android:color/holo_red_light"
-                    android:textSize="15sp"></TextView>
+                    android:textSize="15sp">
+
+                </TextView>
 
                 <ImageView
 
-                    android:id="@+id/item_TruSPGioHang"
+                    android:id="@+id/img_TruSPGioHang"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="7dp"
@@ -73,10 +75,10 @@
                 </TextView>
 
                 <ImageView
-                    android:id="@+id/item_CongSPGioHang"
+
+                    android:id="@+id/img_CongSPGioHang"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-
                     android:src="@drawable/baseline_add_24">
 
                 </ImageView>

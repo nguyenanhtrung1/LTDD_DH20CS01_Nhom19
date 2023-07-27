@@ -7,4 +7,6 @@
     <string name="txtGia_ChiTietSP">Giá : 25.000.000 Đồng</string>
     <string name="btn_ThemGioHang">Thêm vào giỏ hàng</string>
     <string name="toolbarGioHang">Giỏ hàng của bạn</string>
+    <string name="txtDangNhap">Đăng Nhập</string>
+    <string name="txtDangki">Đăng Kí</string>
 </resources>

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.example.shoestore.retrofit.APIShoeStore;
 import com.example.shoestore.retrofit.RetrofitClient;
 import com.example.shoestore.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     APIShoeStore apiShoeStore;
     List<SanPhamMoi> arrSanPhamMoi;
     SanPhamMoiAdapter sanPhamMoiAdapter;
-
+    NotificationBadge badge;
+    FrameLayout frameGioHang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             getLoaiSanPham();
             getSPMoi();
             getEventClick();
+
 
         }else{
             Toast.makeText(getApplicationContext(), "Không có internet", Toast.LENGTH_LONG).show();
@@ -95,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
+            }
+        });
+        frameGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GioHangActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -167,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        frameGioHang = findViewById(R.id.frame_GioHang);
+        badge = findViewById(R.id.badge_SoLuongSP);
         drawerLayout = findViewById(R.id.drawerlayout);
         toolbar = findViewById(R.id.toolbarTrangChu);
         viewFlipper = findViewById(R.id.viewLipper);
@@ -180,20 +193,29 @@ public class MainActivity extends AppCompatActivity {
         arrSanPhamMoi = new ArrayList<>();
         if(Utils.arrGioHang == null){
             Utils.arrGioHang = new ArrayList<>();
+        }else{
+            int totalItem = 0;
+            for (int i = 0; i < Utils.arrGioHang.size(); i++) {
+                totalItem = totalItem + Utils.arrGioHang.get(i).getSoluong();
+
+            }
+            badge.setText(String.valueOf(totalItem));
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int totalItem = 0;
+        for (int i = 0; i < Utils.arrGioHang.size(); i++) {
+            totalItem = totalItem + Utils.arrGioHang.get(i).getSoluong();
+
+        }
+        badge.setText(String.valueOf(totalItem));
+    }
+
     private boolean isConnected(Context context) {
-//        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//        if((wifi != null && wifi.isConnected()) || (mobile != null && mobile.isConnected())){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
+
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
