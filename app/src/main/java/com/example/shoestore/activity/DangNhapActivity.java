@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -27,8 +28,7 @@ public class DangNhapActivity extends AppCompatActivity {
     AppCompatButton btnDangNhap;
     APIShoeStore apiShoeStore;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-
+    boolean isLogin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,22 +66,7 @@ public class DangNhapActivity extends AppCompatActivity {
                 } else {
                     Paper.book().write("taikhoan",taiKhoan);
                     Paper.book().write("matkhau",matKhau);
-                    compositeDisposable.add(apiShoeStore.dangNhap(taiKhoan, matKhau)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        if (userModel.isSuccess()){
-                                            Utils.user_current = userModel.getResult().get(0);
-                                            Intent intent = new Intent(DangNhapActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    },
-                                    throwable -> {
-                                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                            )
-                    );
+                    dangNhap(taiKhoan, matKhau);
                 }
             }
         });
@@ -100,8 +85,40 @@ public class DangNhapActivity extends AppCompatActivity {
         //Read data
         if(Paper.book().read("taikhoan") != null && Paper.book().read("matkhau") != null){
             edtTaiKhoan.setText(Paper.book().read("taikhoan"));
-            edtMatKhau.setText(Paper.book().read("MatKhau"));
+            edtMatKhau.setText(Paper.book().read("matkhau"));
+            if(Paper.book().read("islogin") != null){
+                boolean flag = Paper.book().read("islogin");
+                if(flag){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dangNhap(Paper.book().read("taikhoan"),Paper.book().read("matkhau"));
+                        }
+                    },100);
+                }
+            }
         }
+    }
+
+    private void dangNhap(String taiKhoan, String matKhau) {
+        compositeDisposable.add(apiShoeStore.dangNhap(taiKhoan, matKhau)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()){
+                                isLogin = true;
+                                Paper.book().write("islogin",isLogin);
+                                Utils.user_current = userModel.getResult().get(0);
+                                Intent intent = new Intent(DangNhapActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                )
+        );
     }
 
     @Override

@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class GioHangActivity extends AppCompatActivity {
     RecyclerView recyclerViewGioHang;
     Button btnMuaHang;
     GioHangAdapter gioHangAdapter;
+    static long tongtiensp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     public static void totalMoney() {
-        long tongtiensp = 0;
+        tongtiensp = 0;
         for(int i = 0; i < Utils.arrGioHang.size(); i++){
             tongtiensp = tongtiensp +  (Utils.arrGioHang.get(i).getGiasanpham()* Utils.arrGioHang.get(i).getSoluong());
         }
@@ -61,6 +63,14 @@ public class GioHangActivity extends AppCompatActivity {
             gioHangAdapter = new GioHangAdapter( getApplicationContext(), Utils.arrGioHang);
             recyclerViewGioHang.setAdapter(gioHangAdapter);
         }
+        btnMuaHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GioHangActivity.this, ThanhToanActivity.class);
+                intent.putExtra("tongtien",tongtiensp);
+                startActivity(intent);
+            }
+        });
     }
     private void initView() {
         txtTongTien = findViewById(R.id.txtTongTien);

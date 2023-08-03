@@ -44,4 +44,15 @@ public interface APIShoeStore {
             @Field("taikhoan") String taikhoan,
             @Field("matkhau") String matkhau
     );
+
+    @POST("donhang.php")
+    @FormUrlEncoded
+    Observable<UserModel> taoDonHang(
+            @Field("iduser") int iduser,
+            @Field("sodienthoai") String sodienthoai,
+            @Field("diachi") String diachi,
+            @Field("soluong") int soluong,
+            @Field("tongtien") String tongtien,
+            @Field("chitiet") String chitiet
+    );
 }
