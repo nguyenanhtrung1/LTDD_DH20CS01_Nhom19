@@ -1,5 +1,6 @@
 package com.example.shoestore.retrofit;
 
+import com.example.shoestore.model.DonHangModel;
 import com.example.shoestore.model.LoaiSpModel;
 import com.example.shoestore.model.SanPhamMoiModel;
 import com.example.shoestore.model.UserModel;
@@ -55,4 +56,19 @@ public interface APIShoeStore {
             @Field("tongtien") String tongtien,
             @Field("chitiet") String chitiet
     );
+
+    @POST("xemdonhang.php")
+    @FormUrlEncoded
+    Observable<DonHangModel> xemDonHang(
+            @Field("iduser") int id
+    );
+    @POST("searchsp.php")
+    @FormUrlEncoded
+    Observable<SanPhamMoiModel> timKiemSP(
+            @Field("search") String search
+    );
+
+
+    @GET("xemdonhang.php")
+    Observable<DonHangModel> xemdonhang();
 }

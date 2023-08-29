@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/item_imgspmoi"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="120dp"
                 android:src="@drawable/baseline_perm_media_24">
 
             </ImageView>
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="San pham"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:textStyle="bold">
 
             </TextView>

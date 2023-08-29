@@ -67,17 +67,18 @@ public class ThanhToanActivity extends AppCompatActivity {
                     int idUser = Utils.user_current.getId();
 
                     int soluong = 0;
-                    for (int i = 0; i < Utils.arrGioHang.size(); i++) {
-                        soluong = soluong + Utils.arrGioHang.get(i).getSoluong();
+                    for (int i = 0; i < Utils.arrMuaHang.size(); i++) {
+                        soluong = soluong + Utils.arrMuaHang.get(i).getSoluong();
 
                     }
                     //Log.d("test",new Gson().toJson(Utils.arrGioHang));
-                    compositeDisposable.add(apiShoeStore.taoDonHang(idUser,soDienThoai,diachi,soluong,String.valueOf(tongtien),new Gson().toJson(Utils.arrGioHang))
+                    compositeDisposable.add(apiShoeStore.taoDonHang(idUser,soDienThoai,diachi,soluong,String.valueOf(tongtien),new Gson().toJson(Utils.arrMuaHang))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                  userModel -> {
                                      Toast.makeText(getApplicationContext(), "Thanh Toán Thành Công", Toast.LENGTH_SHORT).show();
+                                     Utils.arrMuaHang.clear();
                                      Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                      startActivity(intent);
                                      finish();

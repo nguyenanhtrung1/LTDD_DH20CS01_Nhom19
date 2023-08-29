@@ -1,10 +1,14 @@
 package com.example.shoestore.adapter;
 
+import static com.example.shoestore.activity.GioHangActivity.totalMoney;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +52,22 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         holder.txtGiaSp.setText( decimalFormat.format((gioHang.getGiasanpham())) + "Đ");
         long gia = gioHang.getSoluong() * gioHang.getGiasanpham();
         holder.txtTongGia.setText(decimalFormat.format(gia));
+        holder.checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    Utils.arrMuaHang.add(gioHang);
+                    totalMoney();
+                }else {
+                    for (int i = 0; i < Utils.arrMuaHang.size(); i++){
+                        if(Utils.arrMuaHang.get(i).getMasanpham() == gioHang.getMasanpham()){
+                            Utils.arrMuaHang.remove(i);
+                            totalMoney();
+                        }
+                    }
+                }
+            }
+        });
         holder.setImageClickListener(new ImageClickListener() {
             @Override
             public void onImageClickListener(View view, int pos, int giatri) {
@@ -69,7 +89,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                              public void onClick(DialogInterface dialog, int which) {
                                  Utils.arrGioHang.remove(pos);
                                  notifyDataSetChanged();
-                                 GioHangActivity.totalMoney();
+                                 totalMoney();
                              }
                          });
                          AlertXoaSP.setNegativeButton("Huỷ!!", new DialogInterface.OnClickListener() {
@@ -105,6 +125,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         ImageView imgItemGioHang,imgTruSanPham,imgCongSanPham;
         TextView txtTenSp, txtGiaSp, txtSoLuong, txtTongGia;
         ImageClickListener imageClickListener;
+        CheckBox checkBoxSP;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imgItemGioHang = itemView.findViewById(R.id.img_ItemGioHang);
@@ -114,6 +135,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             txtTongGia = itemView.findViewById(R.id.txtGia_SPGioHang);
             imgCongSanPham = itemView.findViewById(R.id.img_CongSPGioHang);
             imgTruSanPham = itemView.findViewById(R.id.img_TruSPGioHang);
+            checkBoxSP = itemView.findViewById(R.id.checkboxSP);
 
             imgTruSanPham.setOnClickListener(this);
             imgCongSanPham.setOnClickListener(this);
@@ -128,11 +150,11 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         public void onClick(View v) {
             if(v == imgTruSanPham){
                 imageClickListener.onImageClickListener(v, getAdapterPosition(), 1);
-                GioHangActivity.totalMoney();
+                totalMoney();
             }
             else if(v == imgCongSanPham){
                 imageClickListener.onImageClickListener(v,getAdapterPosition(), 2);
-                GioHangActivity.totalMoney();
+                totalMoney();
             }
         }
     }

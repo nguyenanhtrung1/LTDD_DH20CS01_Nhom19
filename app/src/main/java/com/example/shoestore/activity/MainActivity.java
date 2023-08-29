@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     SanPhamMoiAdapter sanPhamMoiAdapter;
     NotificationBadge badge;
     FrameLayout frameGioHang;
+    ImageView imgSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Không có internet", Toast.LENGTH_LONG).show();
         }
     }
-
     private void getEventClick() {
         listViewTrangChu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,12 +92,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         Intent giayadidas = new Intent(getApplicationContext(), AdidasActivity.class);
-//                        giayadidas.putExtra("loai",1);
                         startActivity(giayadidas);
                         break;
                     case 2:
                         Intent giaynike = new Intent(getApplicationContext(), NikeActivity.class);
                         startActivity(giaynike);
+                        break;
+                    case 3:
+                        Intent donhang = new Intent(getApplicationContext(), LichSuDonHangActivity.class);
+                        startActivity(donhang);
                         break;
                 }
 
@@ -105,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GioHangActivity.class);
+                startActivity(intent);
+            }
+        });
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -178,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        imgSearch = findViewById(R.id.img_SearchSP);
         frameGioHang = findViewById(R.id.frame_GioHang);
         badge = findViewById(R.id.badge_SoLuongSP);
         drawerLayout = findViewById(R.id.drawerlayout);
@@ -225,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();
